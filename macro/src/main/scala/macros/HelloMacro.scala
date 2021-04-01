@@ -1,17 +1,14 @@
 package macros
 
-import scala.annotation.StaticAnnotation
 import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
 
-
-class Hello extends StaticAnnotation {
-  def macroTransform(annottees: Any*): Any = macro HelloMacro.impl
-}
-
 object HelloMacro {
-  def impl(c: whitebox.Context)(annottees: c.Tree*): c.Tree = {
-    annottees.head
+  def withQuestion(message: String): String = macro withQuestionImpl
+
+  def withQuestionImpl(c: whitebox.Context)(message: c.Expr[String]): c.Tree = {
+    import c.universe._
+    q"""${message} + "?" """
   }
 }
 
