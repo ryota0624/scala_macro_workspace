@@ -10,10 +10,6 @@ name := "scala_validation"
 
 version := "0.1"
 
-lazy val scalaReflect = Def.setting {
-  "org.scala-lang" % "scala-reflect" % scalaVersion.value
-}
-
 lazy val application = (project in file("application"))
   .dependsOn(macroProject)
   .settings(
@@ -30,7 +26,6 @@ lazy val application = (project in file("application"))
 lazy val macroProject = (project in file("macro"))
   .settings(
     scalaVersion := "2.13.5",
-    libraryDependencies += scalaReflect.value,
     libraryDependencies += "org.scalameta" %% "scalameta" % "4.4.10",
     scalacOptions ++= Seq(
       "-Ymacro-annotations",
